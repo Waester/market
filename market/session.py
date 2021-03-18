@@ -17,13 +17,13 @@ class Session:
         with self.connection.cursor() as cursor:
             cursor.execute('CREATE TABLE "{}" (datetime TIMESTAMP PRIMARY KEY);'.format(name))
 
-    def fetch_df(self, name):
+    def fetch_df(self, query):
         with self.connection.cursor() as cursor:
-            cursor.execute('SELECT * FROM "{}";'.format(name))
-            query = cursor.fetchall()
+            cursor.execute(query)
+            result = cursor.fetchall()
             columns = [desc[0] for desc in cursor.description]
 
-        df = pd.DataFrame(query, columns=columns).set_index('datetime')
+        df = pd.DataFrame(result, columns=columns).set_index('datetime')
         df.index = pd.to_datetime(df.index, utc=True)
         return df
 

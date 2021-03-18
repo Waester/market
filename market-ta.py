@@ -20,8 +20,8 @@ def main():
         if not session.check_table(stock):
             continue
 
-        dbdf = session.fetch_df(stock)
-        close = dbdf['close'].resample('D').last()
+        dbdf = session.fetch_df('SELECT last(datetime) AS datetime, last(close) AS close FROM "{}" GROUP BY date_trunc(\'day\', datetime) ORDER BY 1;'.format(stock))
+        close = dbdf['close']
 
         df = pd.DataFrame()
         df['ema50'] = close.ewm(span=50, adjust=False).mean()

@@ -27,7 +27,7 @@ def main():
         df['ema50'] = close.ewm(span=50, adjust=False).mean()
         df['ema200'] = close.ewm(span=200, adjust=False).mean()
 
-        tasession.push_df(dataframe=df, name=stock)
+        tasession.push_df(dataframe=df, name=stock, replace=True)
 
 if __name__ == "__main__":
     main()

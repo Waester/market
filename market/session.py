@@ -17,6 +17,10 @@ class Session:
         with self.connection.cursor() as cursor:
             cursor.execute('CREATE TABLE "{}" (datetime TIMESTAMP PRIMARY KEY);'.format(name))
 
+    def _drop_table(self, name):
+        with self.connection.cursor() as cursor:
+            cursor.execute('DROP TABLE "{}";'.format(name))
+
     def fetch_df(self, query):
         with self.connection.cursor() as cursor:
             cursor.execute(query)
@@ -31,9 +35,13 @@ class Session:
         _dict = dict(**kwargs)
         df = _dict.get('dataframe')
         name = _dict.get('name')
+        replace = _dict.get('replace', False)
 
         if len(df.index) < 1:
             return
+
+        if replace:
+            self._drop_table(name)
 
         if not self.check_table(name):
             self._init_table(name)

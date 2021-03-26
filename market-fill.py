@@ -6,7 +6,7 @@ from configparser import ConfigParser
 from yfinance import Ticker
 
 def main():
-    gran = [('max', '1d'), ('2y', '60m'), ('60d', '15m'), ('30d', '5m'), ('7d', '1m')]
+    gran = [('2y', '60m'), ('60d', '15m'), ('30d', '5m'), ('7d', '1m')]
 
     config = ConfigParser()
     config.read('/opt/market/market.ini')

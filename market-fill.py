@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 import market
 import pandas as pd
@@ -9,10 +9,10 @@ def main():
     gran = [('2y', '60m'), ('60d', '15m'), ('30d', '5m'), ('7d', '1m')]
 
     config = ConfigParser()
-    config.read('/opt/market/market.ini')
+    config.read('market.ini')
     stocks = config.get('general', 'stocks')
 
-    db = "postgres://postgres@127.0.0.1:5432/stocks"
+    db = 'market.db'
     session = market.session.Session(db)
 
     for stock in stocks.split():
